@@ -1,0 +1,130 @@
+---
+title: "DSC 462 Assignment 2"
+author: "Shouman Das"
+date: "October 10, 2017"
+header-includes:
+  - \usepackage{amsmath}
+output: pdf_document
+---
+# Question 1
+(a) The PMF of $X$ is given by  
+$$
+p_i = P(X=i) = P(X_1-X_2 = i).
+$$
+The support of $X$ is $\mathcal{S} _X = \{ 0, \pm 1,..., \pm 5\}$. Then the PMF is given by
+$$\begin{aligned}
+&p_0 = P(X=0)=P((X_1,X_2) \in \{(1,1),(2,2),(3,3),(4,4),(5,5),(6,6)\}) = 6/36\\
+&p_1 = P(X=1)=P((X_1,X_2) \in \{(2,1),(3,2),(4,3),(5,4),(6,5)\}) = 5/36\\
+&p_{-1} = P(X=-1)=P((X_1,X_2) \in \{(1,2),(2,3),(3,4),(4,5),(5,6)\}) = 5/36\\
+&p_2 = P(X=2)=P((X_1,X_2) \in \{((3,1),(4,2),(5,3),(6,4)\}) = 4/36\\
+&p_{-2} = P(X=-2)=P((X_1,X_2) \in \{(1,3),(2,4),(3,5),(4,6)\}) = 4/36\\
+&p_3 = P(X=3)=P((X_1,X_2) \in \{((4,1),(5,2),(6,3)\}) = 3/36\\
+&p_{-3} = P(X=-3)=P((X_1,X_2) \in \{(1,4),(2,5),(3,6)\}) = 3/36\\
+&p_4 = P(X=4)=P((X_1,X_2) \in \{((5,1),(6,2)\}) = 2/36\\
+&p_{-4} = P(X=-4)=P((X_1,X_2) \in \{((1,5),(2,6)\}) = 2/36\\
+&p_5 = P(X=5)=P((X_1,X_2) \in \{((6,1)\}) = 1/36\\
+&p_{-5} = P(X=-5)=P((X_1,X_2) \in \{((1,6)\}) = 1/36
+\end{aligned}$$
+
+(b) Similarly, The support of $X$ is $\mathcal{S} _X = \{0, 1,..., 6\}$. Then the PMF is given by 
+$$
+P(X = 0) = P((X_1,X_2)\in \{(j,k)|j\neq k, 1\leq j,k\leq 6\}) = 30/36
+$$
+And for $1\leq i \leq 6$, we have
+$$
+P(X=i) = P((X_1,X_2)\in\{(i,i)\}) = 1/36.
+$$
+
+# Question 2
+
+(a)We have
+$$
+1 = \int_2^4 -c(x-2)(x-4)\ dx = \int_2^4 -c(x^2-6x+8)\ dx = -c[x^3/3-3x^2+8x] = c (4/3)
+$$
+So, $c = 3/4$.
+
+(b) For $x \leq 2$, we have $F_X(x) = 0$, and for $x \geq 4$, we have $F_X(x) = 1$. For $x \in [2, 4]$ we have  $F_X(x) = \int_2^x (3/4)(x-2)(x-4)\ dx = (3/4)(x^3/3-3x^2+8x - 20/3)$. So our CDF will be
+$$
+F_X(x) = \begin{cases}
+0 \textrm{ if } x\leq 2\\
+(3/4)(x^3/3-3x^2+8x - 20/3) \textrm{ if } x\in [2,4]\\
+1 \textrm{ if } x\geq 4
+\end{cases}
+$$
+
+# Question 3
+
+Let $X$ denote the number of boys. So, $X \sim bin(10,0.5)$.
+
+(a) $P(X=6) = {{10}\choose{6}} (0.5)^{6}(0.5)^{4} = {{10}\choose{6}} (0.5)^{10} = 0.2050781$.
+
+(b) $P(X\geq8) = P(X=8)+P(X=9)+P(X=10) = \left[{{10}\choose{8}}+{{10}\choose{9}}+{{10}\choose{10}}\right]0.5^{10} = 0.0546875$.
+
+(c) Let A be the event that first six of the babies are boys. Then
+$$
+P(A|X=6) = \frac{P(A\cap \{X=6\})}{P(X=6)} = \frac{1}{{{10}\choose{6}}}=\frac{1}{210}.
+$$
+
+# Question 4
+
+The height of a plant $X \sim N(49.2, 1.75^2)$. So the probability that a single plant
+has a height of no more than 48 inches is
+$$
+\begin{aligned}
+p & = P(X\leq 48)\\
+&= P(\frac{X-49.2}{1.75}\leq \frac{48-49.2}{1.75})\\
+&\approx P(Z\leq -0.6857143)
+& \approx 0.2464
+\end{aligned}
+$$
+where $Z \sim N(0,1)$. The number of plants of no more than 48 inches height is a binomial distribution $Y \sim bin(20,p)$. So
+$$
+P(Y\leq 3) = {20\choose{0}}(1-p)^{20} + {20\choose{1}}p(1-p)^{19} + {20\choose{2}}p^2(1-p)^{18} + {20\choose{3}}p^3(1-p)^{17}
+$$
+
+$$
+\approx 0.2361194
+$$
+\newpage
+
+# Question 5
+
+```{r}
+set.seed(12) # for reproducibility
+f = function(n=10000){
+    coordinates = matrix(runif(n*2),n,2)
+    m = 0.0
+    for(i in 1:n){
+        x = coordinates[i,1]
+        y = coordinates[i,2]
+        if((x-.5)^2+(y-.5)^2<=.25) m = m+1
+    }
+    return(4*m/n)
+}
+
+# Some outputs
+f()
+f()
+f()
+f()
+
+```
+
+# Question 6
+
+Using the notation of hint, $T_1 = 1$ with probability $1$. And for $j\geq 1$, $T_{j+1}-T_j \sim geom(\frac{m-j}{m})$. Let $X$ be the number of coupon samples needed to have at least one of each type.
+So
+$$
+X = T_m = T_m - T_{m-1} + T_{m-1}-T_{m-2}+ \cdots +T_2-T_1 + T_1 
+$$
+Therefore,
+
+$$
+\begin{aligned}
+E[X] &= \sum_{j=1}^{m-1}E[T_{j+1}-T_{j}]+ E[T_1]\\
+&= \sum_{j=1}^{m-1} \frac{m}{m-j}+1\\
+&= 1 + m\left(1+1/2+1/3+\cdots + 1/(m-1)\right)\\
+&= m\left(1+1/2+1/3+\cdots + 1/(m-1)+1/m\right)
+\end{aligned}
+$$
+
